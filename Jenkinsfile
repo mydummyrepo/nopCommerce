@@ -17,13 +17,13 @@ pipeline {
         }
         stage('build') {
             steps {
-                sh 'dotnet build -c Release src/Presentation/Nop.Web/Nop.Web.csproj'
+                sh "dotnet build -r '8.0.10' -c Release src/Presentation/Nop.Web/Nop.Web.csproj"
             }
         }
         stage('publish') {
             steps {
                 sh 'mkdir published'
-                sh 'dotnet publish -c Release -o ./published/ src/Presentation/Nop.Web/Nop.Web.csproj'
+                sh "dotnet publish -r '8.0.10' -c Release -o ./published/ src/Presentation/Nop.Web/Nop.Web.csproj"
             }
         }
     }
