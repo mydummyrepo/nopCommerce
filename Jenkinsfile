@@ -15,35 +15,28 @@ pipeline {
                 branch: 'develop'
             }
         }
-        stage('Build') {
+        stage('build') {
             steps {
-                echo 'Starting build...'
-                dotnetBuild {
-                    configuration 'Release'
-                    project 'src/Presentation/Nop.Web/Nop.Web.csproj'
-                    runtime '8.0.10'
-                }
-                echo 'Build completed.'
+                sh 'dotnet build -c Release src/Presentation/Nop.Web/Nop.Web.csproj'
             }
         }
-        stage('Publish') {
+        stage('publish') {
             steps {
-                echo 'Publishing project...'
-                dotnetPublish {
-                    configuration 'Release'
-                    project 'src/Presentation/Nop.Web/Nop.Web.csproj'
-                    runtime '8.0.10'
-                    outputDirectory 'published'
-                }
+                sh 'mkdir published'
+                sh 'dotnet publish -c Release -o ./published/ src/Presentation/Nop.Web/Nop.Web.csproj'
             }
         }
     }
     post {
         success {
-            echo 'Build and published successfully.'
+            zip zipFile : './published.zip',
+                archive : true,
+                dir: './published',
+                overwrite : true
+            echo 'Build and published successfully'
         }
         failure {
-            echo 'Build failed.'
+            echo 'Build failed'
         }
     }
 }
