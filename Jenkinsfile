@@ -15,17 +15,20 @@ pipeline {
                 branch: 'develop'
             }
         }
-        stage('build') {
+        stage('Build') {
             steps {
+                echo 'Starting build...'
                 dotnetBuild {
                     configuration 'Release'
                     project 'src/Presentation/Nop.Web/Nop.Web.csproj'
                     runtime '8.0.10'
                 }
+                echo 'Build completed.'
             }
         }
-        stage('publish') {
+        stage('Publish') {
             steps {
+                echo 'Publishing project...'
                 dotnetPublish {
                     configuration 'Release'
                     project 'src/Presentation/Nop.Web/Nop.Web.csproj'
@@ -37,10 +40,10 @@ pipeline {
     }
     post {
         success {
-            echo 'Build and published successfully'
+            echo 'Build and published successfully.'
         }
         failure {
-            echo 'Build failed'
+            echo 'Build failed.'
         }
     }
 }
