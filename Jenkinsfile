@@ -20,26 +20,26 @@ pipeline {
         }
         stage('build') {
             steps {
-                dotnetBuild {
+                dotnetBuild(
                     configuration : 'Release'
                     project : 'src/Presentation/Nop.Web/Nop.Web.csproj'
-                }
+                )
             }
         }
         stage('clean') {
             steps {
-                dotnetClean {
+                dotnetClean(
                     outputDirectory : 'published'
-                }
+                )
             }
         }
         stage('publish') {
             steps {
-                dotnetPublish {
+                dotnetPublish(
                     configuration : 'Release'
                     outputDirectory : 'published'
                     project : 'src/Presentation/Nop.Web/Nop.Web.csproj'
-                }
+                )
             }
         }
     }
