@@ -9,7 +9,7 @@ pipeline {
         pollSCM('H * * * 1-5')
     }
     tools {
-        dotnetsdk 'dotnet-8.0.10'
+        dotnetsdk 'dotnet-9.0.0'
     }
     stages {
         stage('SCM') {
@@ -21,34 +21,36 @@ pipeline {
         stage('build') {
             steps {
                 dotnetBuild(
-                    configuration : 'Release',
-                    project : 'src/Presentation/Nop.Web/Nop.Web.csproj'
+                    configuration: 'Release',
+                    project: 'src/Presentation/Nop.Web/Nop.Web.csproj'
                 )
             }
         }
         stage('clean') {
             steps {
                 dotnetClean(
-                    outputDirectory : 'published'
+                    outputDirectory: 'published'
                 )
             }
         }
         stage('publish') {
             steps {
                 dotnetPublish(
-                    configuration : 'Release',
-                    outputDirectory : 'published',
-                    project : 'src/Presentation/Nop.Web/Nop.Web.csproj'
+                    configuration: 'Release',
+                    outputDirectory: 'published',
+                    project: 'src/Presentation/Nop.Web/Nop.Web.csproj'
                 )
             }
         }
     }
     post {
         success {
-            zip zipFile : './published.zip',
-                archive : true,
+            zip(
+                zipFile: './published.zip',
+                archive: true,
                 dir: './published',
-                overwrite : true
+                overwrite: true
+            )
             echo 'Build and published successfully'
         }
         failure {
