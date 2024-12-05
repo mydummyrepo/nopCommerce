@@ -29,6 +29,7 @@ pipeline {
         stage('clean') {
             steps {
                 dotnetClean(
+                    project: 'src/Presentation/Nop.Web/Nop.Web.csproj',
                     outputDirectory: 'published'
                 )
             }
