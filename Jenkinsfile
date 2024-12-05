@@ -21,7 +21,7 @@ pipeline {
         stage('build') {
             steps {
                 dotnetBuild(
-                    configuration : 'Release'
+                    configuration : 'Release',
                     project : 'src/Presentation/Nop.Web/Nop.Web.csproj'
                 )
             }
@@ -36,8 +36,8 @@ pipeline {
         stage('publish') {
             steps {
                 dotnetPublish(
-                    configuration : 'Release'
-                    outputDirectory : 'published'
+                    configuration : 'Release',
+                    outputDirectory : 'published',
                     project : 'src/Presentation/Nop.Web/Nop.Web.csproj'
                 )
             }
