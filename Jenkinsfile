@@ -28,6 +28,7 @@ pipeline {
         }
         stage('clean') {
             steps {
+                sh 'mkdir -p published'
                 dotnetClean(
                     project: 'src/Presentation/Nop.Web/Nop.Web.csproj',
                     outputDirectory: 'published'
